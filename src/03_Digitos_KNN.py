@@ -1,40 +1,54 @@
 #==============================================================================
-#  Classificacao KNN no Conjunto de Dados IRIS
+#  Classificacao KNN no Conjunto de Dados DIGITS
 #==============================================================================
 
 #------------------------------------------------------------------------------
-#  Importar o conjunto de dados Iris em um dataframe do pandas
+#  Importar o conjunto de dados Digits em um dataframe do pandas
 #------------------------------------------------------------------------------
 
 import pandas as pd
-dataframe = pd.read_excel('../data/iris.xlsx')
+dataframe = pd.read_excel('../data/digits.xlsx')
 
 #------------------------------------------------------------------------------
 #  Criar os arrays numéricos correspondentes aos atributos e ao alvo
 #------------------------------------------------------------------------------
 
-X = dataframe.iloc[:,:-1].values
+X = dataframe.iloc[:,1:-1].values
 y = dataframe.iloc[:,-1].values
 
 #------------------------------------------------------------------------------
-#  Separar 100 amostras para treinamento e 50 amostras para teste
+#  Visualizar alguns digitos
 #------------------------------------------------------------------------------
 
-# Jeito ERRADO de fazer:
-    
-#X_treino = X[:100,:]
-#X_teste  = X[100:,:]
+import matplotlib.pyplot as plt
 
-#y_treino = y[:100]
-#y_teste  = y[100:]
+for i in range(0,10):
+    plt.figure(figsize=(40,240))
+    d_plot = plt.subplot(1, 10, i+1)
+    d_plot.set_title("y = %.2f" % y[i])
+ 
+    d_plot.imshow(X[i,:].reshape(8,8),
+                  #interpolation='spline16',
+                  interpolation='nearest',
+                  cmap='binary',
+                  vmin=0 , vmax=16)
+    #plt.text(-8, 3, "y = %.2f" % y[i])
 
-# Jeito CERTO de fazer (randomizado):
+    d_plot.set_xticks(())
+    d_plot.set_yticks(())
+ 
+plt.show()
+
+
+#------------------------------------------------------------------------------
+#  Dividir as amostras em conjunto de treino e conjunto de teste
+#------------------------------------------------------------------------------
 
 from sklearn.model_selection import train_test_split
 
 X_treino, X_teste, y_treino, y_teste = train_test_split(
     X, y,
-    test_size=50,
+    test_size=0.33,
     random_state=42
     )
 
@@ -49,7 +63,7 @@ from sklearn.neighbors import KNeighborsClassifier
 #------------------------------------------------------------------------------
 
 classificador = KNeighborsClassifier(
-    n_neighbors = 10,
+    n_neighbors =  1,
     weights     = 'uniform',
     n_jobs      = -1   
     )
