@@ -56,16 +56,23 @@ X_treino, X_teste, y_treino, y_teste = train_test_split(
 #  Importar a classe KNeighborsClassifier do pacote sklearn.neighbors
 #------------------------------------------------------------------------------
 
-from sklearn.neighbors import KNeighborsClassifier
+#from sklearn.neighbors import KNeighborsClassifier
+
+#from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 
 #------------------------------------------------------------------------------
 #  Criar o classificador
 #------------------------------------------------------------------------------
 
-classificador = KNeighborsClassifier(
-    n_neighbors =  100,
-    weights     = 'uniform',
-    n_jobs      = -1   
+# classificador = KNeighborsClassifier(
+#     n_neighbors =  100,
+#     weights     = 'uniform',
+#     n_jobs      = -1   
+#     )
+
+classificador = RandomForestClassifier(
+    n_estimators = 500
     )
 
 #------------------------------------------------------------------------------
@@ -96,21 +103,22 @@ print ( 'Acuracia:',100*accuracy_score(y_teste,y_resposta), '%')
 #  Determinar experimentalmente o melhor valor de K
 #------------------------------------------------------------------------------
 
-for k in range(1,20,1):
+# for k in range(1,50,1):
     
-    classificador = KNeighborsClassifier(
-        n_neighbors =  k,
-        weights     = 'uniform',
-        n_jobs      = -1   
-        )
+#     classificador = DecisionTreeClassifier(
+#         criterion='entropy',
+#         max_features=64,
+#         max_depth=k,
+#         min_impurity_decrease = 0.00001
+#         )
 
-    classificador.fit(X_treino,y_treino)
+#     classificador.fit(X_treino,y_treino)
 
-    y_resposta = classificador.predict(X_teste)
+#     y_resposta = classificador.predict(X_teste)
 
-    acuracia = 100*accuracy_score(y_teste,y_resposta)
+#     acuracia = 100*accuracy_score(y_teste,y_resposta)
     
-    print ( 'k = %02d ,  acc = %4.1f' % ( k , acuracia ))
+#     print ( 'k = %02d ,  acc = %4.1f' % ( k , acuracia ))
 
 
     
