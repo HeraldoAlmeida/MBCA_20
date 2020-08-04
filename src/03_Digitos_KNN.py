@@ -100,7 +100,7 @@ for k in range(1,20,1):
     
     classificador = KNeighborsClassifier(
         n_neighbors =  k,
-        weights     = 'uniform',
+        weights     = 'distance',
         n_jobs      = -1   
         )
 
